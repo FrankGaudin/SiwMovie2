@@ -20,7 +20,6 @@ import static it.uniroma3.siw.siwmovie2.model.Credentials.ADMIN_ROLE;
 
 @Configuration
 @EnableWebSecurity
-//public  class WebSecurityConfig {
 public class AuthConfiguration {
 
     @Autowired
@@ -52,7 +51,7 @@ public class AuthConfiguration {
                 .authorizeHttpRequests()
 //                .requestMatchers("/**").permitAll()
                 // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
-                .requestMatchers(HttpMethod.GET,"/","/index","/register","/css/**", "/images/**", "favicon.ico").permitAll()
+                .requestMatchers(HttpMethod.GET,"/artist/**","/artists","/movie/**","/movies","/","/index","/register","/css/**", "/images/**", "favicon.ico").permitAll()
                 // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register
                 .requestMatchers(HttpMethod.POST,"/register", "/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/templates/admin/**").hasAnyAuthority(ADMIN_ROLE)

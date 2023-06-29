@@ -1,10 +1,9 @@
 package it.uniroma3.siw.siwmovie2.controller;
 
 import it.uniroma3.siw.siwmovie2.controller.validator.MovieValidator;
-import it.uniroma3.siw.siwmovie2.model.Artist;
-import it.uniroma3.siw.siwmovie2.model.Movie;
-import it.uniroma3.siw.siwmovie2.repository.ArtistRepository;
-import it.uniroma3.siw.siwmovie2.repository.MovieRepository;
+import it.uniroma3.siw.siwmovie2.model.*;
+import it.uniroma3.siw.siwmovie2.repository.*;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -26,6 +27,13 @@ public class MovieController {
 
     @Autowired
     private MovieValidator movieValidator;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private CredentialsRepository credentialsRepository;
+
 
     @GetMapping(value="/admin/formNewMovie")
     public String formNewMovie(Model model) {
@@ -108,7 +116,6 @@ public class MovieController {
 
     @GetMapping("/admin/updateActors/{id}")
     public String updateActors(@PathVariable("id") Long id, Model model) {
-
         List<Artist> actorsToAdd = this.actorsToAdd(id);
         model.addAttribute("actorsToAdd", actorsToAdd);
         model.addAttribute("movie", this.movieRepository.findById(id).get());
@@ -156,4 +163,116 @@ public class MovieController {
         }
         return actorsToAdd;
     }
+
+
+
+
+   /* @GetMapping(value="/user/addReviewToMovie/{reviewId}/{movieId}")
+    public String addReviewToMovie(@PathVariable("reviewId") Long reviewId, @PathVariable("movieId") Long movieId, Model model) {
+        Movie movie = this.movieRepository.findById(movieId).get();
+        Review review = this.reviewRepository.findById(reviewId).get();
+        List<Review> reviews = movie.getReviews();
+        if(!reviewRepository.existsByUserAndMovieReviewed(review.getUser(), movie)) {
+            reviews.add(review);
+            review.setMovieReviewed(movie);
+            this.movieRepository.save(movie);
+
+            model.addAttribute("movie", movie);
+            model.addAttribute("reviewsToAdd", reviews);
+        }
+        return "user/reviewToAdd.html";
+    }*/
+
+    @GetMapping(value="/admin/removeReviewFromMovie/{reviewId}/{movieId}")
+    public String removeReviewFromMovie(@PathVariable("reviewId") Long reviewId, @PathVariable("movieId") Long movieId, Model model) {
+        Movie movie = this.movieRepository.findById(movieId).get();
+        Review review = this.reviewRepository.findById(reviewId).get();
+        List<Review> reviews = movie.getReviews();
+        reviews.remove(review);
+        this.movieRepository.save(movie);
+
+        model.addAttribute("movie", movie);
+        model.addAttribute("actorsToAdd", reviews);
+
+        return "user/reviewToAdd.html";
+    }
+
+
+
+   /* @GetMapping(value="/user/formNewReview/{id}")
+    public String formNewReview(@PathVariable("id") Long id,Model model) {
+        model.addAttribute("movie", this.movieRepository.findById(id).get());
+        model.addAttribute("review", new Review());
+        return "user/formNewReview.html";
+    }*/
+
+    @GetMapping(value="/user/indexReview")
+    public String indexReview() {
+        return "user/indexReview.html";
+    }
+
+    /*@PostMapping("/user/review/{id}/{id1}")
+    public String newReview(@ModelAttribute("review") Review review,@PathVariable("id") Long movieId,@PathVariable("id1") Long userId, Model model) {
+        Movie movie = this.movieRepository.findById(movieId).get();
+        List<Review> reviews = movie.getReviews();
+        if(!reviewRepository.existsByUserAndMovieReviewed(review.getUser(), movie)) {
+            this.reviewRepository.save(review);
+            review.setMovieReviewed(movie);
+            reviews.add(review);
+            this.movieRepository.save(movie);
+
+            model.addAttribute("movie", movie);
+            return "movie";
+        } else {
+            model.addAttribute("messaggioErrore", "Ha già recensito questo film");
+            return "user/formNewReview.html";
+        }
+    }*/
+
+    @GetMapping(value="/user/formNewReview/{id}")
+    public String formNewReview(@PathVariable("id") Long id, Model model) {
+        Movie movie = movieRepository.findById(id).orElse(null);
+        model.addAttribute("movie", movie);
+        model.addAttribute("review", new Review());
+        return "user/formNewReview.html";
+    }
+
+    @PostMapping("/user/review/{id}")
+    public String newReview(@ModelAttribute("review") Review review, @PathVariable("id") Long movieId, Model model, Principal principal) {
+        Movie movie = movieRepository.findById(movieId).orElse(null);
+        User user = credentialsRepository.findByUsername(principal.getName()).orElse(null).getUser();
+
+        if (user != null) {
+            if (!reviewRepository.existsByUserAndMovieReviewed(user, movie)) {
+                review.setMovieReviewed(movie);
+                review.setUser(user);
+                reviewRepository.save(review);
+
+                movie.getReviews().add(review);
+                movieRepository.save(movie);
+
+                model.addAttribute("movie", movie);
+                return "movies.html";
+            } else {
+                model.addAttribute("messaggioErrore", "Hai già recensito questo film");
+                return "user/formNewReview.html";
+            }
+        } else {
+            // L'utente non è autenticato, gestisci di conseguenza
+            return "login.html";
+        }
+    }
+
+    @GetMapping("/review/{id}")
+    public String getReview(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("review", this.reviewRepository.findById(id).get());
+        return "review.html";
+    }
+
+    @GetMapping("/reviews")
+    public String getReviews(Movie movie, Model model) {
+        model.addAttribute("reviews", this.reviewRepository.findAllByMovieReviewed(movie));
+        return "movie.html";
+    }
+
 }

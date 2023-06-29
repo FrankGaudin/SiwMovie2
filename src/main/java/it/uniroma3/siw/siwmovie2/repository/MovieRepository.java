@@ -2,7 +2,6 @@ package it.uniroma3.siw.siwmovie2.repository;
 
 import it.uniroma3.siw.siwmovie2.model.Movie;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

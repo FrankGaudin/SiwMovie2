@@ -7,8 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Movie {
@@ -31,6 +30,22 @@ public class Movie {
 
     @ManyToMany
     private Set<Artist> actors;
+
+    @OneToMany
+    private List<Review> reviews;
+
+    public Movie (){
+        this.actors = new HashSet<>();
+        this.reviews = new LinkedList<>();
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public Long getId() {
         return id;

@@ -11,7 +11,7 @@
     <span th:text="${userDetails.username}"></span>
     <a href="/logout">Logout</a>
   </div>
-  <div th:unless="${user}">
+  <div>
     <a href="/login">Login</a>
   </div>
 </header>
@@ -21,6 +21,7 @@
 <div th:if="${movie}">
   <span th:text="${movie.title}">Up!</span>
   <span th:text="'(' + ${movie.year} + ')'">2000</span>
+  <a th:href="@{'/user/formNewReview/' + ${movie.id}}">Aggiungi una recensione</a>
   <span><img width="5%" th:src="${movie.urlImage}" /></span>
 </div>
 <div th:unless="${movie}">Non esiste</div>

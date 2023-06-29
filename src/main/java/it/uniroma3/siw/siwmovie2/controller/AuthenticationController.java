@@ -41,7 +41,7 @@ public class AuthenticationController {
     @GetMapping(value = "/")
     public String index(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof AnonymousAuthenticationToken) {
+        if (authentication instanceof AnonymousAuthenticationToken || authentication == null) {
             return "index.html";
         }
         else {
