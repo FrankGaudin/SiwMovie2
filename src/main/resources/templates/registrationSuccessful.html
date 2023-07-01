@@ -3,35 +3,31 @@
 
 <head>
   <title>SiwMovie - Registrazione conclusa</title>
-  <link rel="stylesheet" href="/css/stile.css" />
+  <link rel="stylesheet" href="/css/loginStile.css" />
 </head>
 
 <body>
 <header>
-  <div th:if="${userDetails}">
-    <span th:text="${userDetails.username}"></span>
-    <a href="/logout">Logout</a>
-  </div>
-  <div th:unless="${user}">
-    <a href="/login">Login</a>
-  </div>
+    <a href="/"><img src="/images/logo-siw.png" width="150"/></a>
 </header>
 
-<div>
-  <a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
+<div class="container">
+  <div class="login-block">
+    <h1>Congratulazioni ti sei registrato!</h1>
+    <div class="input-group">
+      <span>Nome: </span>
+      <span th:text="${user.name}"></span>
+    </div>
+    <div class="input-group">
+      <span>Cognome: </span>
+      <span th:text="${user.surname}"></span>
+    </div>
+    <div class="input-group">
+      <span>Email: </span>
+      <span th:text="${user.email}"></span>
+    </div>
+  </div>
 </div>
-<h1>Congratulazioni ti sei registrato!</h1>
-<div>
-  <span>Nome: </span>
-  <span th:text="${user.name}"></span>
-</div>
-<div>
-  <span>Cognome: </span>
-  <span th:text="${user.surname}"></span>
-</div>
-<div>
-  <span>Email: </span>
-  <span th:text="${user.email}"></span>
-</div>
+
 </body>
 </html>

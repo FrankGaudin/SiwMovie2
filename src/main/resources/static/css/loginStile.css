@@ -1,0 +1,87 @@
+body {
+    font-family: "Geneva";
+    color: dimgrey;
+    background: url(../images/backgroundLogin.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+header {
+    text-align: right;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-block {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.login-block .input-group {
+    width: 290px;
+    margin-bottom: 10px;
+}
+
+.login-block input[type="text"],
+.login-block input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-block .button-group {
+    margin-top: 10px;
+}
+
+.login-block button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-block button:hover {
+    background-color: #45a049;
+}
+
+.register-block {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e53935;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 93.6%;
+}
+
+.register-button:hover {
+    background-color: #c62828;
+}

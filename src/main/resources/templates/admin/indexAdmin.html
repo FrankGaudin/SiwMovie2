@@ -9,29 +9,35 @@
 </head>
 
 <body>
-<header>
-  <div th:if="${userDetails}">
+<header class="headerIndex">
+  <div class="login-box" th:if="${userDetails}">
     <span th:text="${userDetails.username}"></span>
     <a href="/logout">Logout</a>
   </div>
-  <div th:unless="${user}">
+  <div class="login-box" th:unless="${userDetails}">
     <a href="/login">Login</a>
   </div>
 </header>
 
-<div><img src="/images/logo-siw.png" width="50%" /></div>
+<div class="logo-container"><img src="/images/logo-siw.png" width="50%" /></div>
+<div class="form-search">
+  <form th:action="@{/searchMovies}" method="post">
+    <input th:value="${title}" name="title" placeholder="Cerca film..." />
+    <!-- Aggiungi il pulsante di ricerca o altri elementi desiderati -->
+  </form>
+</div>
 <h1>Consulta l'archivio</h1>
-<div>
+<div class="hobj">
   <a href="/movie">Elenco Film</a>
 </div>
-<div>
+<div class="hobj">
   <a href="/artist">Elenco Artisti</a>
 </div>
 <h1>Operazioni per amministratore</h1>
-<div>
+<div class="hobj">
   <a href="/admin/indexMovie">Operazioni sui film</a>
 </div>
-<div>
+<div class="hobj">
   <a href="/admin/indexArtist">Operazioni sugli artisti</a>
 </div>
 </body>

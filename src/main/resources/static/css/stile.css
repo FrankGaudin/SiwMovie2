@@ -1,0 +1,185 @@
+body {
+    font-family: "Geneva";
+    color: dimgrey;
+    background: url(../images/backgroundMovie.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+h1{
+    color: whitesmoke;
+    font-family: Apple Chancery, cursive;
+}
+a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.hobj {
+    font-family: Apple Chancery, cursive;
+    text-decoration: none;
+    color: whitesmoke;
+    font-size: xx-large;
+    display: inline-block; /* Aggiunto */
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header {
+    font-family: Apple Chancery, cursive;
+    text-decoration: underline;
+}
+.headerIndex{
+    display: flex;
+    font-family: Apple Chancery, cursive;
+    text-decoration: underline;
+    justify-content: right;
+}
+.heeaderContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.hlogo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.logo-container img {
+    width: 20%;
+}
+
+.login-box {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.login-box a {
+    color: black;
+    font-size: 1.2em;
+}
+
+.form-search {
+    display: inline-block;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+.form-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1em;
+}
+
+.form-search input[type="text"] {
+    margin-left: 10px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.slideshow-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+}
+
+.slideshow-image {
+    flex: 0 0 100%;
+    object-fit: contain;
+    height: 100%;
+}
+
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 36px;
+    font-weight: bold;
+    padding: 10px;
+    color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.consult-archive {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.consult-archive-link {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.consult-archive-link:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.film-title {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.slideshow-item:hover .image-overlay {
+    opacity: 1;
+}

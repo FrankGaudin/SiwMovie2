@@ -4,26 +4,32 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    private Movie movieReviewed;
-
-    @ManyToOne
-    private User user;
-
     @NotBlank
+    private String title;
+
+    @NotNull
     @Min(1)
     @Max(5)
-    private int value;
+    private Integer rate;
 
-    private String description;
+    @NotBlank
+    private String comment;
+
+    @ManyToOne
+    //@JoinColumn(name="movie_id")
+    private Movie movie;
+
+    @ManyToOne
+    //@JoinColumn(name="reviewer_id")
+    private User reviewer;
 
     public Long getId() {
         return id;
@@ -33,35 +39,43 @@ public class Review {
         this.id = id;
     }
 
-    public Movie getMovieReviewed() {
-        return movieReviewed;
+    public String getTitle() {
+        return title;
     }
 
-    public void setMovieReviewed(Movie moviesReviewed) {
-        this.movieReviewed = moviesReviewed;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getRate() {
+        return rate;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRate(Integer rate) {
+        this.rate = rate;
     }
 
-    public int getValue() {
-        return value;
+    public String getComment() {
+        return comment;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getDescription() {
-        return description;
+    public Movie getMovie() {
+        return movie;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public User getReviewer() {
+        return reviewer;
+    }
+
+    public void setReviewer(User reviewer) {
+        this.reviewer = reviewer;
     }
 }

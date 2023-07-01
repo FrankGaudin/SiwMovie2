@@ -9,9 +9,7 @@ import java.util.List;
 
 public interface ReviewRepository extends CrudRepository<Review, Long> {
 
-    public boolean existsByUserAndMovieReviewed(User user, Movie movieReviewed);
+    public boolean existsByReviewerAndMovie(User reviewer, Movie movie);
 
-    public List<Review> findAllByMovieReviewed(Movie movie);
-    
-
+    public List<Review> findByOrderByRateAsc();
 }

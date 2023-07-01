@@ -6,22 +6,30 @@
     New Movie
   </title>
   <link rel="stylesheet" href="/css/stile.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 
 <body>
 <header>
-  <div th:if="${userDetails}">
-    <span th:text="${userDetails.username}"></span>
-    <a href="/logout">Logout</a>
-  </div>
-  <div th:unless="${user}">
-    <a href="/login">Login</a>
+  <div class="heeaderContainer">
+    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
+    <div>
+      <div class="login-box" th:if="${userDetails}">
+        <span th:text="${userDetails.username}"></span>
+        <a href="/logout">Logout</a>
+      </div>
+      <div th:unless="${userDetails}" class="login-box">
+        <a href="/login">Login</a>
+      </div>
+    </div>
   </div>
 </header>
 
-<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
 <h1>Aggiungi un film</h1>
-<form th:action="@{/admin/movie}" method="POST" th:object="${movie}">
+<form th:action="@{/admin/movie}" method="POST" th:object="${movie}"
+      enctype="multipart/form-data"
+      style="max-width: 400px; margin: 0 auto;"
+>
   <div th:if="${#fields.hasGlobalErrors()}">
     <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
   </div>
@@ -40,9 +48,27 @@
   </div>
 
   <div>
-    <label>URL immagine:</label> <span><input type="text" th:field="${movie.urlImage}" /></span>
+    <label>Immagine:</label> <span><input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg"/></span>
   </div>
+  <div>
+    <img id="thumbnail" alt="Logo Preview" />
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#fileImage').change(function(){
+        showImageThumbnail(this);
+      })
+    })
 
+    function showImageThumbnail(fileInput){
+      file = fileInput.files[0];
+      reader = new FileReader();
+      reader.onload = function(e) {
+        $('#thumbnail').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
   <div>
     <span><button type="submit">Conferma</button></span>
   </div>

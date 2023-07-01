@@ -5,43 +5,33 @@
   <title>
     SiwMovie - Login
   </title>
-  <link rel="stylesheet" href="/css/stile.css" />
+  <link rel="stylesheet" href="/css/loginStile.css" />
 </head>
 
 <body>
 <header>
-  <div th:if="${userDetails}">
-    <span th:text="${userDetails.username}"></span>
-    <a href="/logout">Logout</a>
-  </div>
-  <div th:unless="${user}">
-    <a href="/login">Login</a>
-  </div>
+  <a href="/"><img src="/images/logo-siw.png" width="150" /></a>
 </header>
-
-<div>
-  <a href="/"><img src="/images/logo-siw.png" width="50%"/></a>
-</div>
-<h1>Login</h1>
-<form th:action="@{/login}" method="POST">
-  <div>
-    <span>Username:</span>
-    <span><input name="username" type="text" required /></span>
+<div class="container">
+  <div class="login-block">
+    <form th:action="@{/login}" method="POST">
+      <div class="input-group">
+        <input name="username" type="text" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <input name="password" type="password" placeholder="Password" required>
+      </div>
+      <div>
+        <span th:if="${param.error != null}">Username o password errati</span>
+      </div>
+      <div class="button-group">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+    <div>
+      <a class="register-button" th:href="@{/register}" th:text="Registrati">Register</a>
+    </div>
   </div>
-  <div>
-    <span>Password:</span>
-    <span><input name="password" type="password" required /></span>
-  </div>
-  <div>
-    <span th:if="${param.error != null}">Username o password errati</span>
-  </div>
-  <div>
-    <span><button type="submit">Login</button></span>
-  </div>
-</form>
-<div>
-  <a th:href="@{/register}" th:text="Registrati">Registrati</a>
 </div>
 </body>
-
 </html>

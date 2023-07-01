@@ -14,24 +14,24 @@
         <span th:text="${userDetails.username}"></span>
         <a href="/logout">Logout</a>
     </div>
-    <div th:unless="${user}">
+    <div th:unless="${userDetails}">
         <a href="/login">Login</a>
     </div>
 </header>
 
 <div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
-<h1>Aggiungi un artista</h1>
-<form th:action="@{/user/review}" method="POST" th:object="${review}">
+<h1>Aggiungi una recensione</h1>
+<form th:action="@{'/review/' + ${movie.id}} " method="POST" th:object="${review}">
     <div>
         <span th:text="${messaggioErrore}">Errore</span>
     </div>
 
     <div>
-        <label>Voto:</label> <span><input required type ="number" min="1" max="5" step="1" th:field="${review.value}"></span>
+        <label>Voto:</label> <span><input required type ="number" min="1" max="5" step="1" th:field="${review.rate}"></span>
     </div>
 
     <div>
-        <label>Recensione:</label> <span><input required type="text" th:field="${review.description}" /></span>
+        <label>Recensione:</label> <span><input required type="text" th:field="${review.comment}" /></span>
     </div>
     <div>
         <span><button type="submit">Conferma</button></span>

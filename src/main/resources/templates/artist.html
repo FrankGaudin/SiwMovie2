@@ -7,6 +7,7 @@
 
 <body>
 <header>
+  <div><a href="/"><img src="/images/logo-siw.png" width="15%"/></a></div>
   <div th:if="${userDetails}">
     <span th:text="${userDetails.username}"></span>
     <a href="/logout">Logout</a>
@@ -16,7 +17,7 @@
   </div>
 </header>
 
-<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
+
 <h1>Dettagli Artista</h1>
 <div th:if="${artist}">
   <span th:text="${artist.name} + ' ' + ${artist.surname}">Dino Risi</span>

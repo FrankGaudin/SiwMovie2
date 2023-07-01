@@ -1,6 +1,7 @@
 package it.uniroma3.siw.siwmovie2.model;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -20,10 +21,12 @@ public class Movie {
     private String title;
 
     @NotNull
-    @Min(1888)
+    @Min(1900)
     @Max(2023)
     private Integer year;
-    private String urlImage;
+
+    @Nullable
+    private byte[] image;
 
     @ManyToOne
     private Artist director;
@@ -31,12 +34,13 @@ public class Movie {
     @ManyToMany
     private Set<Artist> actors;
 
-    @OneToMany
+    @OneToMany(mappedBy="movie")
     private List<Review> reviews;
 
-    public Movie (){
+
+    public Movie() {
         this.actors = new HashSet<>();
-        this.reviews = new LinkedList<>();
+        this.reviews = new ArrayList<>();
     }
 
     public List<Review> getReviews() {
@@ -51,33 +55,23 @@ public class Movie {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
-
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Integer getYear() {
         return year;
     }
 
-    public String getUrlImage() {
-        return urlImage;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
     }
 
     public Artist getDirector() {
@@ -94,6 +88,15 @@ public class Movie {
 
     public void setActors(Set<Artist> actors) {
         this.actors = actors;
+    }
+
+    @Nullable
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(@Nullable byte[] image) {
+        this.image = image;
     }
 
     @Override
