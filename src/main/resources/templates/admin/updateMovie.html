@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="heeaderContainer">
+        <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
+        <div>
+            <div class="login-box" th:if="${userDetails}">
+                <span th:text="${userDetails.username}"></span>
+                <a href="/logout">Logout</a>
+            </div>
+            <div th:unless="${userDetails}" class="login-box">
+                <a href="/login">Login</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<h1>Modifica Film</h1>
+<div class="content-container">
+<form th:action="@{'/admin/updatedMovie/' + ${movie.id}}" method="POST" th:object="${movie}"
+      enctype="multipart/form-data"
+      style="max-width: 400px; margin: 0 auto;">
+
+    <div>
+        <label>Titolo:</label>
+        <span><input type="text" th:field="${movie.title}" /></span>
+        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+		    </span>
+    </div>
+
+    <div>
+        <label>Anno:</label> <span><input type="text" th:field="${movie.year}" /></span>
+        <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}">
+		    </span>
+    </div>
+
+    <div>
+        <label>Immagine:</label> <span><input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg"/></span>
+    </div>
+    <div>
+        <img id="thumbnail" alt="Logo Preview" />
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#fileImage').change(function(){
+                showImageThumbnail(this);
+            })
+        })
+
+        function showImageThumbnail(fileInput){
+            file = fileInput.files[0];
+            reader = new FileReader();
+            reader.onload = function(e) {
+                $('#thumbnail').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+    <div>
+        <span><button type="submit">Salva</button></span>
+    </div>
+</form>
+</div>
+</body>
+</html>

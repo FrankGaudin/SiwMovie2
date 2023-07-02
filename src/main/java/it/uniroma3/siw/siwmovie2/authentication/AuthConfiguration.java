@@ -17,6 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import javax.sql.DataSource;
 
 import static it.uniroma3.siw.siwmovie2.model.Credentials.ADMIN_ROLE;
+import static it.uniroma3.siw.siwmovie2.model.Credentials.DEFAULT_ROLE;
 
 @Configuration
 @EnableWebSecurity
@@ -56,6 +57,8 @@ public class AuthConfiguration {
                 .requestMatchers(HttpMethod.POST,"/register", "/login","/searchMovies").permitAll()
                 .requestMatchers(HttpMethod.GET, "/templates/admin/**").hasAnyAuthority(ADMIN_ROLE)
                 .requestMatchers(HttpMethod.POST, "/templates/admin/**").hasAnyAuthority(ADMIN_ROLE)
+                // gli autenticati possono fare recensioni
+                .requestMatchers(HttpMethod.POST,"/formNewReview").hasAnyAuthority(DEFAULT_ROLE)
                 // tutti gli utenti autenticati possono accere alle pagine rimanenti
                 .anyRequest().authenticated()
                 // LOGIN: qui definiamo il login

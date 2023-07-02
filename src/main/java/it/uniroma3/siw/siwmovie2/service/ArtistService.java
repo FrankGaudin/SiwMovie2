@@ -4,10 +4,15 @@ import it.uniroma3.siw.siwmovie2.model.Artist;
 import it.uniroma3.siw.siwmovie2.model.Movie;
 import it.uniroma3.siw.siwmovie2.repository.ArtistRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -15,12 +20,6 @@ public class ArtistService {
 
     @Autowired
     private ArtistRepository artistRepository;
-//
-//    @Autowired
-//    private ImageRepository imageRepository;
-
-//    @Autowired
-//    private ImageValidator imageValidator;
 
     @Transactional
     public Iterable<Artist> getAllArtists() {
@@ -43,17 +42,12 @@ public class ArtistService {
     }
 
     @Transactional
-    public void addArtist(@Valid Artist artist) {
+    public void addArtist(@Valid Artist artist, @NotNull MultipartFile image) throws IOException {
+        byte[] photoBytes = image.getBytes();
+        artist.setImage(photoBytes);
         this.artistRepository.save(artist);
     }
 
-//    @Transactional
-//	public void createNewArtist(Artist artist, MultipartFile image) throws IOException {
-//		Image artistImg = new Image(image.getBytes());
-//        this.imageRepository.save(artistImg);
-//        artist.setProfilePicture(artistImg);
-//        this.artistRepository.save(artist);
-//	}
 
     @Transactional
     public void deleteArtist(Long artistId) {
@@ -61,30 +55,34 @@ public class ArtistService {
         Set<Movie> movies = artist.getActorOf();
         for(Movie movie : movies) {
             movie.getActors().remove(artist);
+            if(movie.getDirector() != null && movie.getDirector().equals(artist)){
+                movie.setDirector(null);
+            }
         }
         this.artistRepository.delete(artist);
     }
 
-//    @Transactional
-//	public void addProfilePicture(Artist artist, MultipartFile image) throws IOException{
-//        if (this.imageValidator.isImage(image) || image.getSize() < ImageValidator.MAX_IMAGE_SIZE){
-//            Image artistImg = new Image(image.getBytes());
-//            this.imageRepository.save(artistImg);
-//            artist.setProfilePicture(artistImg);
-//            this.artistRepository.save(artist);
-//        }
-//    }
-//
-//	@Transactional
-//	public void setProfilePicture(Artist artist, MultipartFile image) throws IOException{
-//        if (this.imageValidator.isImage(image) || image.getSize() < ImageValidator.MAX_IMAGE_SIZE){
-//        	Image oldImg = artist.getProfilePicture();
-//        	Image newImg = new Image(image.getBytes());
-//        	this.imageRepository.save(newImg);
-//        	artist.setProfilePicture(newImg);
-//            this.artistRepository.save(artist);
-//            this.imageRepository.delete(oldImg);
-//        }
-//    }
+    @Transactional
+    public void updateArtist(Long artistId, String name, String surname,
+                             LocalDate dateOfBirth, LocalDate dateOfDeath, MultipartFile image) throws IOException{
+        Artist artist = artistRepository.findById(artistId).get();
+        if(name != null && name.length() != 0) {
+            artist.setName(name);
+        }
+        if(surname != null && surname.length() != 0) {
+            artist.setSurname(surname);
+        }
+        if(dateOfBirth != null){
+            artist.setDateOfBirth(dateOfBirth);
+        }
+        if(dateOfDeath != null){
+            artist.setDateOfDeath(dateOfDeath);
+        }
+        if (image != null && !image.isEmpty()) {
+            byte[] photoBytes = image.getBytes();
+            artist.setImage(photoBytes);
+        }
+        artistRepository.save(artist);
+    }
 
 }

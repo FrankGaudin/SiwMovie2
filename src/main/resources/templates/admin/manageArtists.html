@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Film</title>
+  <title>Artisti</title>
   <link rel="stylesheet" href="/css/stile.css" />
 </head>
 
@@ -22,22 +22,23 @@
   </div>
 </header>
 
-<h1>Film</h1>
-<div class="hobj" th:if="${movies==null || movies.isEmpty()}">Non ci sono film nel sistema</div>
+
+<h1>Artisti</h1>
+<div class="hobj" th:if="${artists==null || artists.isEmpty()}">Non ci sono artisti nel sistema</div>
 <div class="movies-container">
-  <div th:each="movie : ${movies}">
-    <a th:href="@{'/admin/formUpdateMovie' + '/' + ${movie.id}}">
+  <div th:each="artist : ${artists}">
+    <a th:href="@{'/admin/formUpdateArtist' + '/' + ${artist.id}}">
       <div class="movie-container">
         <div class="movie-image">
-          <img th:if="${movie.encodedImage}" th:src="'data:image/jpeg;base64,' + ${movie.encodedImage}" alt="Movie Image" />
+          <img th:if="${artist.encodedImage}" th:src="'data:image/jpeg;base64,' + ${artist.encodedImage}" alt="Movie Image" />
         </div>
         <div class="movie-details">
-          <span class="movie-title" th:text="${movie.title}"></span>
-          <span class="movie-year" th:text="'(' + ${movie.year} + ')'"></span>
+          <span class="movie-title" th:text="${artist.name} + ' ' + ${artist.surname}"></span>
         </div>
       </div>
     </a>
   </div>
 </div>
 </body>
+
 </html>

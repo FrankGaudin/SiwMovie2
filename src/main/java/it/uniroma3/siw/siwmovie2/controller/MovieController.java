@@ -5,6 +5,7 @@ import it.uniroma3.siw.siwmovie2.model.*;
 import it.uniroma3.siw.siwmovie2.service.ArtistService;
 import it.uniroma3.siw.siwmovie2.service.CredentialsService;
 import it.uniroma3.siw.siwmovie2.service.MovieService;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -60,7 +62,7 @@ public class MovieController {
     @GetMapping(value="/admin/adminMovie/{id}")
     public String adminMovie(@PathVariable("id") Long id, Model model) {
         model.addAttribute("movie", movieService.getMovieById(id));
-        return "admin/adminMovie.html";
+        return "admin/movie.html";
     }
 
     @GetMapping(value="/admin/manageMovies")
@@ -94,10 +96,27 @@ public class MovieController {
         if (!bindingResult.hasErrors()) {
             this.movieService.createNewMovie(movie, image);
             model.addAttribute("movie", movie);
-            return "admin/adminMovie.html";
+            return "movie.html";
         } else {
             return "admin/formNewMovie.html";
         }
+    }
+
+    @GetMapping("admin/updateMovie/{id}")
+    public String getMovieToUpdate(@PathVariable("id") Long id, Model model){
+        model.addAttribute("movie", movieService.getMovieById(id));
+        return "admin/updateMovie";
+    }
+    @PostMapping("/admin/updatedMovie/{id}")
+    public String updateMovie(@PathVariable("id") Long id,
+                              @RequestParam("title") String title,
+                              @RequestParam("year") Integer year,
+                              @RequestParam(value = "fileImage", required = false) MultipartFile imageFile,
+                              Model model) throws IOException {
+        Movie movie = movieService.getMovieById(id);
+        movieService.updateMovie(id, title, year, imageFile);
+        model.addAttribute("movie", movie);
+        return "admin/movie.html";
     }
 
     @GetMapping("/movie/{id}")
@@ -114,20 +133,19 @@ public class MovieController {
 
     @GetMapping("/movie")
     public String getMovies(Model model) {
-
-        //UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-
-        //model.addAttribute("movies", this.movieService.getAllMovies());
-        model.addAttribute("movies", this.movieService.getAllMoviesByAsc());
-        //model.addAttribute("user", credentials.getUser());
+        List<Movie> movies = new ArrayList<>();
+        for(Movie m: this.movieService.getAllMoviesByAsc()){
+            byte[] photo = m.getImage();
+            if(photo != null) {
+                String image = java.util.Base64.getEncoder().encodeToString(photo);
+                model.addAttribute("image", image);
+            }
+            movies.add(m);
+        }
+        model.addAttribute("movies", movies);
         return "movies.html";
     }
 
-    @GetMapping("/formSearchMovies")
-    public String formSearchMovies() {
-        return "formSearchMovies.html";
-    }
 
     @PostMapping("/searchMovies")
     public String searchMovies(Model model, @RequestParam String title) {
@@ -169,6 +187,7 @@ public class MovieController {
         return "admin/actorsToAdd.html";
     }
 
+
     @GetMapping("/addReview/{id}")
     public String addReview(@PathVariable("id") Long id, Model model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -179,6 +198,14 @@ public class MovieController {
         model.addAttribute("review", new Review());
         return "formNewReview.html";
     }
+
+    @GetMapping("/admin/manageReviews/{id}")
+    public String deleteReview(@PathVariable("id") Long id, Model model) {
+        Movie movie = this.movieService.getMovieById(id);
+        model.addAttribute("movie", movie);
+        return "admin/manageReviews.html";
+    }
+
 
     @GetMapping("/movie/reviews/{reviewId}")
     public String getReviews(@PathVariable("id")Long id, Model model) {
@@ -195,5 +222,4 @@ public class MovieController {
         model.addAttribute("movies", this.movieService.getAllMoviesByAsc());
         return "admin/manageMovies.html";
     }
-
 }

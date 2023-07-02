@@ -25,12 +25,21 @@
 
 <h1>Film</h1>
 <div th:if="${movies==null || movies.isEmpty()}">Non ci sono film nel sistema</div>
-<ul>
-  <li th:each="movie : ${movies}">
-    <a th:href="@{'/movie' + '/' + ${movie.id}}"
-       th:text="${movie.title} + ' (' + ${movie.year} + ')'">Up! (2000)</a>
-  </li>
-</ul>
+<div class="movies-container">
+  <div th:each="movie : ${movies}">
+    <a th:href="@{'/movie' + '/' + ${movie.id}}">
+      <div class="movie-container">
+        <div class="movie-image">
+          <img th:if="${movie.encodedImage}" th:src="'data:image/jpeg;base64,' + ${movie.encodedImage}" alt="Movie Image" />
+        </div>
+        <div class="movie-details">
+          <span class="movie-title" th:text="${movie.title}"></span>
+          <span class="movie-year" th:text="'(' + ${movie.year} + ')'"></span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
 </body>
 
 </html>

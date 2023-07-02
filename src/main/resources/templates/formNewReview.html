@@ -10,33 +10,40 @@
 
 <body>
 <header>
-    <div th:if="${userDetails}">
-        <span th:text="${userDetails.username}"></span>
-        <a href="/logout">Logout</a>
-    </div>
-    <div th:unless="${userDetails}">
-        <a href="/login">Login</a>
+    <div class="heeaderContainer">
+        <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
+        <div>
+            <div class="login-box" th:if="${userDetails}">
+                <span th:text="${userDetails.username}"></span>
+                <a href="/logout">Logout</a>
+            </div>
+            <div th:unless="${userDetails}" class="login-box">
+                <a href="/login">Login</a>
+            </div>
+        </div>
     </div>
 </header>
 
-<div><a href="/"><img src="/images/logo-siw.png" width="50%"/></a></div>
-<h1>Aggiungi una recensione</h1>
+
+<h1 class="hform">Aggiungi una recensione</h1>
+<div class="content-container">
 <form th:action="@{'/review/' + ${movie.id}} " method="POST" th:object="${review}">
     <div>
         <span th:text="${messaggioErrore}">Errore</span>
     </div>
 
     <div>
-        <label>Voto:</label> <span><input required type ="number" min="1" max="5" step="1" th:field="${review.rate}"></span>
+        <h2>Voto:</h2> <span><input class="voto" required type ="number" min="1" max="5" step="1" th:field="${review.rate}"></span>
     </div>
 
     <div>
-        <label>Recensione:</label> <span><input required type="text" th:field="${review.comment}" /></span>
+        <h2>Recensione:</h2> <span><textarea class="recensione" required type="text" th:field="${review.comment}" ></textarea></span>
     </div>
     <div>
         <span><button type="submit">Conferma</button></span>
     </div>
 </form>
+</div>
 </body>
 
 </html>

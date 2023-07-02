@@ -12,7 +12,7 @@
 <body>
 <header>
   <div class="heeaderContainer">
-    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
+    <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
     <div>
       <div class="login-box" th:if="${userDetails}">
         <span th:text="${userDetails.username}"></span>
@@ -25,7 +25,8 @@
   </div>
 </header>
 
-<h1>Aggiungi un film</h1>
+<h1 class="hform">Aggiungi un film</h1>
+<div class="content-container">
 <form th:action="@{/admin/movie}" method="POST" th:object="${movie}"
       enctype="multipart/form-data"
       style="max-width: 400px; margin: 0 auto;"
@@ -73,6 +74,7 @@
     <span><button type="submit">Conferma</button></span>
   </div>
 </form>
+</div>
 </body>
 
 </html>

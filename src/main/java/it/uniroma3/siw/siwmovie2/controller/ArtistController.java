@@ -5,14 +5,17 @@ import it.uniroma3.siw.siwmovie2.model.Artist;
 import it.uniroma3.siw.siwmovie2.repository.ArtistRepository;
 import it.uniroma3.siw.siwmovie2.service.ArtistService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Controller
 public class ArtistController {
@@ -35,10 +38,11 @@ public class ArtistController {
     }
 
     @PostMapping("/admin/artist")
-    public String newArtist(@Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult, Model model) {
+    public String newArtist(@Valid @ModelAttribute("artist") Artist artist, BindingResult bindingResult, Model model,
+                            @RequestParam("fileImage") @NotNull MultipartFile image ) throws IOException{
         this.artistValidator.validate(artist, bindingResult);
         if (!bindingResult.hasErrors()) {
-            this.artistService.addArtist(artist);
+            this.artistService.addArtist(artist, image);
             model.addAttribute("artist", artist);
             return "artist.html";
         } else {
@@ -61,12 +65,6 @@ public class ArtistController {
         return "artists.html";
     }
 
-//	@GetMapping("/admin/formUpdateArtist/{id}")
-//	public String formUpdateArtist(@PathVariable("id") Long id, Model model) {
-//		model.addAttribute("artist", this.artistService.getActorById(id));
-//		return "admin/formUpdateArtist.html";
-//	}
-
     @GetMapping("/admin/manageArtists")
     public String manageArtists(Model model) {
         model.addAttribute("artists", this.artistService.getAllArtists());
@@ -80,28 +78,23 @@ public class ArtistController {
         return "admin/manageArtists.html";
     }
 
-//	@GetMapping("/admin/formUpdateArtist/{id}")
-//	public String formUpdateArtist(@PathVariable("id") Long id, Model model) {
-//		Artist artist = this.artistService.getActorById(id);
-//		model.addAttribute("artist", artist);
-//		return "admin/formUpdateArtist.html";
-//	}
-
-//	@PostMapping("/admin/addProfilePicture")
-//	public String addProfilePicture(@RequestParam("file") MultipartFile image, @RequestParam("artist") Long artistId, Model model)
-//			throws IOException {
-//		Artist artist = this.artistService.getActorById(artistId);
-//		this.artistService.addProfilePicture(artist, image);
-//		model.addAttribute("artist", artist);
-//		return "admin/formUpdateArtist.html";
-//	}
-//
-//	@PostMapping("/admin/setProfilePicture")
-//	public String setProfilePicture(@RequestParam("file") MultipartFile image, @RequestParam("artist") Long artistId, Model model)
-//			throws IOException {
-//		Artist artist = this.artistService.getActorById(artistId);
-//		this.artistService.setProfilePicture(artist, image);
-//		model.addAttribute("artist", artist);
-//		return "admin/formUpdateArtist.html";
-//	}
+    @GetMapping("/admin/formUpdateArtist/{id}")
+    public String updateArtist(@PathVariable("id") Long id, Model model){
+        Artist artist = this.artistService.getActorById(id);
+        model.addAttribute("artist", artist);
+        return "admin/formUpdateArtist.html";
+    }
+	@PostMapping("/admin/updatedArtist/{id}")
+	public String formUpdateArtist(@PathVariable("id") Long id,
+                                   @RequestParam("name") String name,
+                                   @RequestParam("surname") String surname,
+                                   @RequestParam(value = "dateOfBirth", required = false) LocalDate dateOfBirth,
+                                   @RequestParam(value ="dateOfDeath", required = false) LocalDate dateOfDeath,
+                                   @RequestParam(value = "fileImage", required = false) MultipartFile imageFile,
+                                   Model model) throws IOException {
+		Artist artist = this.artistService.getActorById(id);
+        artistService.updateArtist(id, name, surname, dateOfBirth,dateOfDeath, imageFile);
+		model.addAttribute("artist", artist);
+		return "admin/updatedArtist.html";
+	}
 }

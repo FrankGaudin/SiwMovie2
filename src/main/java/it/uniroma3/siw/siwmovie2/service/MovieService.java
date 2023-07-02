@@ -16,6 +16,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -39,6 +40,24 @@ public class MovieService {
         movie.setImage(photoBytes);
         this.movieRepository.save(movie);
     }
+
+
+    public void updateMovie(Long id, String title, Integer year, MultipartFile image) throws IOException{
+        Movie movie = movieRepository.findById(id).get();
+        if(title != null) {
+            movie.setTitle(title);
+        }
+        if(year!= null && year >1888 && year <2023) {
+            movie.setYear(year);
+        }
+        if (image != null && !image.isEmpty()) {
+            byte[] photoBytes = image.getBytes();
+            movie.setImage(photoBytes);
+        }
+
+        movieRepository.save(movie);
+    }
+
 
     public Movie getMovieById(Long id) {
         return this.movieRepository.findById(id).get();

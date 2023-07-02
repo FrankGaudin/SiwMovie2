@@ -1,5 +1,6 @@
 package it.uniroma3.siw.siwmovie2.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,15 +16,20 @@ public class Artist {
     private String name;
     private String surname;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
-    private String urlOfPicture;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate dateOfDeath;
 
     @ManyToMany(mappedBy="actors")
     private Set<Movie> starredMovies;
 
     @OneToMany(mappedBy="director")
     private List<Movie> directedMovies;
+
+    @Nullable
+    private byte[] image;
 
     public Artist(){
         this.starredMovies = new HashSet<>();
@@ -62,28 +68,44 @@ public class Artist {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getUrlOfPicture() {
-        return urlOfPicture;
+    public LocalDate getDateOfDeath() {
+        return dateOfDeath;
     }
 
-    public void setUrlOfPicture(String urlOfPicture) {
-        this.urlOfPicture = urlOfPicture;
+    public void setDateOfDeath(LocalDate dateOfDeath) {
+        this.dateOfDeath = dateOfDeath;
     }
 
     public Set<Movie> getActorOf() {
         return starredMovies;
     }
 
-    public void setActorOf(Set<Movie> starredMovies) {
+    public void setStarredMovies(Set<Movie> starredMovies) {
         this.starredMovies = starredMovies;
     }
 
-    public List<Movie> getDirectorOf() {
+    public List<Movie> getDirectedMovies() {
         return directedMovies;
     }
 
-    public void setDirectorOf(List<Movie> directedMovies) {
+    public void setDirectedMovies(List<Movie> directedMovies) {
         this.directedMovies = directedMovies;
+    }
+
+    @Nullable
+    public byte[] getImage() {
+        return image;
+    }
+
+    public String getEncodedImage() {
+        if (image != null) {
+            return Base64.getEncoder().encodeToString(image);
+        }
+        return null;
+    }
+
+    public void setImage(@Nullable byte[] image) {
+        this.image = image;
     }
 
     @Override

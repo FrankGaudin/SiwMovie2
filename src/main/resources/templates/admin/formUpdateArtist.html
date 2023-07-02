@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+<body>
+
+<header>
+    <div class="heeaderContainer">
+        <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
+        <div>
+            <div class="login-box" th:if="${userDetails}">
+                <span th:text="${userDetails.username}"></span>
+                <a href="/logout">Logout</a>
+            </div>
+            <div th:unless="${userDetails}" class="login-box">
+                <a href="/login">Login</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<h1>Modifica Attore</h1>
+<div class="content-container">
+    <form th:action="@{'/admin/updatedArtist/' + ${artist.id}}" method="POST" th:object="${artist}"
+          enctype="multipart/form-data"
+          style="max-width: 400px; margin: 0 auto;">
+
+        <div>
+            <label>Nome:</label>
+            <span><input type="text" th:field="${artist.name}" /></span>
+		    </span>
+        </div>
+
+        <div>
+            <label>Cognome:</label> <span><input type="text" th:field="${artist.surname}" /></span>
+		    </span>
+        </div>
+        <div>
+            <label>Data di nascita:</label>
+            <span><input type="date" th:value="${artist.dateOfBirth != null ? artist.dateOfBirth.toString() : ''}" /></span>
+        </div>
+
+        <div>
+            <label>Data di morte:</label>
+            <span><input type="date" th:value="${artist.dateOfDeath != null ? artist.dateOfDeath.toString() : ''}" /></span>
+        </div>
+        <div>
+            <label>Immagine:</label> <span><input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg"/></span>
+        </div>
+        <div>
+            <img id="thumbnail" alt="Logo Preview" />
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#fileImage').change(function(){
+                    showImageThumbnail(this);
+                })
+            })
+
+            function showImageThumbnail(fileInput){
+                file = fileInput.files[0];
+                reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#thumbnail').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        </script>
+        <div>
+            <span><button type="submit">Salva</button></span>
+        </div>
+    </form>
+</div>
+<div class="rb-block">
+    <a class="rb-block" th:href="@{'/admin/deleteArtist/' + ${artist.id}}">
+        <button class="red-button" type="button" style="display: block;">Elimina attore</button>
+    </a>
+</div>
+</body>
+</html>

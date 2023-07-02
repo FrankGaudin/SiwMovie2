@@ -75,6 +75,9 @@ public class Review {
         return reviewer;
     }
 
+    public String getReviewerName(){
+        return reviewer.getName();
+    }
     public void setReviewer(User reviewer) {
         this.reviewer = reviewer;
     }

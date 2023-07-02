@@ -9,7 +9,7 @@
 <body>
 <header>
   <div class="heeaderContainer">
-    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
+    <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
     <div>
       <div class="login-box" th:if="${userDetails}">
         <span th:text="${userDetails.username}"></span>
@@ -23,13 +23,22 @@
 </header>
 
 <h1>Film che soddisfano i requisiti</h1>
-<div th:if="${movies.isEmpty()}">Non ci sono film che soddisfano i requisiti</div>
-<ul th:if="${!movies.isEmpty()}">
-  <li th:each="movie : ${movies}">
-    <a href="movie.html" th:href="@{'/movie' + '/' + ${movie.id}}"
-       th:text="${movie.title} + ' (' + ${movie.year}+')'">Up! (2000)</a>
-  </li>
-</ul>
+<div th:if="${movies==null || movies.isEmpty()}">Non ci sono film che soddisfano i requisiti</div>
+<div class="movies-container">
+  <div th:each="movie : ${movies}">
+    <a th:href="@{'/movie' + '/' + ${movie.id}}">
+      <div class="movie-container">
+        <div class="movie-image">
+          <img th:if="${movie.encodedImage}" th:src="'data:image/jpeg;base64,' + ${movie.encodedImage}" alt="Movie Image" />
+        </div>
+        <div class="movie-details">
+          <span class="movie-title" th:text="${movie.title}"></span>
+          <span class="movie-year" th:text="'(' + ${movie.year} + ')'"></span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
 </body>
 
 </html>

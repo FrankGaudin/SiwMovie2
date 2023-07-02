@@ -2,54 +2,55 @@
 <html>
 
 <head>
-  <title>
-    New Movie
-  </title>
-  <link rel="stylesheet" href="/css/stile.css" />
+    <title>
+        New Movie
+    </title>
+    <link rel="stylesheet" href="/css/stile.css"/>
 </head>
 
 <body>
 <header>
-  <div class="heeaderContainer">
-    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
-    <div>
-      <div class="login-box" th:if="${userDetails}">
-        <span th:text="${userDetails.username}"></span>
-        <a href="/logout">Logout</a>
-      </div>
-      <div th:unless="${userDetails}" class="login-box">
-        <a href="/login">Login</a>
-      </div>
+    <div class="heeaderContainer">
+        <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
+        <div>
+            <div class="login-box" th:if="${userDetails}">
+                <span th:text="${userDetails.username}"></span>
+                <a href="/logout">Logout</a>
+            </div>
+            <div th:unless="${userDetails}" class="login-box">
+                <a href="/login">Login</a>
+            </div>
+        </div>
     </div>
-  </div>
 </header>
 
-<h1>Aggiorna film</h1>
-<div th:if="${movie}">
-  <div>
-    <span th:text="${movie.title}">Up!</span>
-    <span th:text="'(' + ${movie.year} + ')'">2000</span>
-  </div>
-  <div th:if="${movie.director}">
-    <span>Regista: </span><span th:text="${movie.director.name} + ' ' + ${movie.director.surname}">Steven
-				Spielberg</span>
-    <a th:href="@{'/admin/addDirector/' + ${movie.id}}">Modifica regista</a></span>
-  </div>
-  <div th:unless="${movie.director}">
-    <a th:href="@{'/admin/addDirector/' + ${movie.id}}">Aggiungi regista</a>
-  </div>
-
-  <div>
-    <span>Attori: </span>
-    <div th:each="actor: ${movie.actors}">
-      <span th:text="${actor.name} + ' ' + ${actor.surname}">Al Pacino</span>
+<div>
+    <div class="formContent">
+        <h1 class="hform">Aggiorna film</h1>
+        <div>
+            <a class="hobj" th:href="@{'/admin/updateMovie/' + ${movie.id}}">
+                <button class="btnazione" type="button">Modifica dati film</button>
+            </a>
+            <a class="hobj" th:href="@{'/admin/manageReviews/' + ${movie.id}}">
+                <button class="btnazione" type="button">Gestisci recensioni</button>
+            </a>
+        </div>
+        <div>
+        <a th:href="@{'/admin/addDirector/' + ${movie.id}}">
+            <button class="btnazione" type="button">Modifica regista</button>
+        </a>
+        <a class="hobj" th:href="@{'/admin/updateActors/' + ${movie.id}}">
+            <button class="btnazione" type="button">Modifica attori</button>
+        </a>
+        </div>
+        <div>
+        <a class="hobj" th:href="@{'/admin/deleteMovie/' + ${movie.id}}">
+            <button class="movie-button red-button" type="button">Elimina film</button>
+        </a>
+        </div>
     </div>
-    <a th:href="@{'/admin/updateActors/' + ${movie.id}}">
-      <button type="button">Modifica</button>
-    </a>
-  </div>
-  </div>
-  <div th:unless="${movie}">Film non esistente</div>
+    <div th:unless="${movie}">Film non esistente</div>
+</div>
 </body>
 
 </html>

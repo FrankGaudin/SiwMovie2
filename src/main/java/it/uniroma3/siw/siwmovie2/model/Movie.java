@@ -95,6 +95,13 @@ public class Movie {
         return image;
     }
 
+    public String getEncodedImage() {
+        if (image != null) {
+            return Base64.getEncoder().encodeToString(image);
+        }
+        return null;
+    }
+
     public void setImage(@Nullable byte[] image) {
         this.image = image;
     }

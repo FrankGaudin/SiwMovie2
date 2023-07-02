@@ -6,9 +6,13 @@ body {
     background-repeat: no-repeat;
 }
 
+ul {
+    list-style-type: none;
+}
+
 h1{
     color: whitesmoke;
-    font-family: Apple Chancery, cursive;
+    font-family: Times, Times New Roman, serif;
 }
 a {
     text-decoration: none;
@@ -16,11 +20,11 @@ a {
 }
 
 .hobj {
-    font-family: Apple Chancery, cursive;
+    font-family: Times, Times New Roman, serif;
     text-decoration: none;
     color: whitesmoke;
     font-size: xx-large;
-    display: inline-block; /* Aggiunto */
+    display: inline-block;
 }
 
 a:hover {
@@ -28,12 +32,12 @@ a:hover {
 }
 
 header {
-    font-family: Apple Chancery, cursive;
+    font-family: Times, Times New Roman, serif;
     text-decoration: underline;
 }
 .headerIndex{
     display: flex;
-    font-family: Apple Chancery, cursive;
+    font-family: Times, Times New Roman, serif;
     text-decoration: underline;
     justify-content: right;
 }
@@ -72,13 +76,12 @@ header {
 }
 
 .form-search {
-    display: inline-block;
-    justify-content: flex-start;
-    align-items: center;
+    display: flex;
+    max-width: 300px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 5px 10px;
-    margin-top: 10px;
+    margin:10px auto;
 }
 
 .form-search input {
@@ -182,4 +185,313 @@ header {
 
 .slideshow-item:hover .image-overlay {
     opacity: 1;
+}
+
+/*==========================================
+Movies.html
+============================================*/
+
+.movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.movie-container {
+    flex: 0 0 calc(25% - 20px);
+    max-width: 200px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.movie-image {
+    height: 200px;
+}
+
+.movie-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.movie-details {
+    margin-top: 10px;
+}
+
+.movie-title {
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.movie-year {
+    color: black;
+    font-size: 1em;
+}
+
+
+
+/* =============================================
+Movie.html
+================================================*/
+
+
+.movie-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centered-image {
+    display: block;
+    margin: 0 auto;
+}
+
+.review-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.review-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: yellow;
+    border-radius: 20px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.review-button:hover {
+    background-color: gold;
+}
+
+.movie-info-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.movie-data {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.movie-title {
+    color: black;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.movie-year {
+    color: black;
+    font-size: 1.2em;
+}
+
+.review-block {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    max-width: 500px;
+}
+
+.film-details-wrapper {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.centered-heading {
+    color: whitesmoke;
+    font-family: Times, Times New Roman, serif;
+    font-size: 2.5em;
+    text-align: center;
+    margin-top: 0;
+}
+
+.reviewTitle {
+    font-size: x-large;
+    color: #0b0b89;
+    font-family: Times, Times New Roman, serif;
+}
+
+.reviewContent {
+    font-size: x-large;
+    color: #000000;
+    font-family: Times, Times New Roman, serif;
+}
+
+/*==========================================
+Form creazione
+============================================ */
+
+.hform{
+display: flex;
+justify-content: center;
+}
+
+.content-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: black;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="file"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: yellow;
+    border-radius: 20px;
+    border: none;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: gold;
+}
+
+#thumbnail {
+    max-width: 410px;
+}
+
+/*
+form update movie
+ */
+.btnazione{
+    background-color: white;
+    color: black;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: xx-large;
+    font-family: Times, Times New Roman, serif;
+    margin: 5px 10px;
+    cursor: pointer;
+    width: 280px;
+    height: 100px;
+    box-sizing: border-box;
+
+}
+.movie-button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.yellow-button {
+    border: none;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: yellow;
+    padding: 20px 60px;
+}
+
+.green-button {
+    border: none;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: green;
+    color: white;
+    padding: 20px 60px;
+}
+
+.red-button {
+    border: none;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: red;
+    color: white;
+    padding: 20px 60px;
+}
+
+.rb-block{
+    font-family: Times, Times New Roman, serif;
+    text-decoration: none;
+    color: whitesmoke;
+    font-size: xx-large;
+    display: block;
+    margin: 20px;
+}
+
+.formContent{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*
+formNewReview
+ */
+
+.voto{
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.recensione{
+    width: 100%;
+    height: 150px;
+    resize: none;
+    font-size: 20px;
+    border-radius: 10px;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+/* ================================
+manageReviews
+=================================== */
+
+.review-block {
+    position: relative;
+}
+
+.remove-review-btn {
+    align-self: flex-start; /* Allinea il bottone in alto a sinistra nel blocco */
 }

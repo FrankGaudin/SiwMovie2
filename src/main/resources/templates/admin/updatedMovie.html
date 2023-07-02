@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Artista</title>
+  <title>Film</title>
   <link rel="stylesheet" href="/css/stile.css" />
 </head>
 
@@ -21,23 +21,24 @@
   </div>
 </header>
 
-
-<h1 class="centered-heading">Dettagli Artista</h1>
-<div th:if="${artist}" class="film-details-container">
+<h1 class="centered-heading">Dettagli Film</h1>
+<div th:if="${movie}" class="film-details-container">
   <div class="movie-image-container">
-    <img class="centered-image" th:src="'data:image/jpeg;base64,' + ${artist.encodedImage}" />
+    <img class="centered-image" th:src="'data:image/jpeg;base64,' + ${movie.encodedImage}" />
+  </div>
+
+  <div class="review-container">
+    <a class="review-button" th:href="@{'/addReview/' + ${movie.id}}">Aggiungi una recensione</a>
   </div>
 
   <div class="movie-info-container">
     <div class="movie-data">
-  <div th:text="${artist.name} + ' ' + ${artist.surname}">Dino Risi></div>
-  <div th:text="'Data di nascita: ' + ${#temporals.format(artist.dateOfBirth, 'dd-MM-yyyy')}">20/20/2000</div>
-      <div th:if="${artist.dateOfDeath}">
-    <span th:text="'Data di nascita: ' + ${#temporals.format(artist.dateOfDeath, 'dd-MM-yyyy')}"></span>
-    </div>
+      <span class="movie-title" th:text="${movie.title}">Up!</span>
+      <span class="movie-year" th:text="'(' + ${movie.year} + ')'">2000</span>
     </div>
   </div>
 </div>
-<div th:unless="${artist}">Non esiste</div>
+
+<div class="hobj" th:unless="${movie}">Non esiste</div>
 </body>
 </html>

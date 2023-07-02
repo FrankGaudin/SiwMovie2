@@ -9,7 +9,7 @@
 <body>
 <header>
   <div class="heeaderContainer">
-    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
+    <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
     <div>
       <div class="login-box" th:if="${userDetails}">
         <span th:text="${userDetails.username}"></span>
@@ -22,12 +22,12 @@
   </div>
 </header>
 
-<h1>Gestione Artisti</h1>
-<div>
-  <a href="/admin/formNewArtist">Inserisci i dati di un artista</a>
+<h1 class="consult-archive">Gestione Artisti</h1>
+<div class="consult-archive">
+  <a href="/admin/formNewArtist" class="consult-archive-link">Inserisci i dati di un artista</a>
 </div>
-<div>
-  <a href="/artist">Artisti</a>
+<div class="consult-archive">
+  <a href="/admin/manageArtists" class="consult-archive-link">Gestisci artisti</a>
 </div>
 </body>
 </html>

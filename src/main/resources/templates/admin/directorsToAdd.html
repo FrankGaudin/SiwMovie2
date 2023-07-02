@@ -9,7 +9,7 @@
 <body>
 <header>
   <div class="heeaderContainer">
-    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
+    <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
     <div>
       <div class="login-box" th:if="${userDetails}">
         <span th:text="${userDetails.username}"></span>
@@ -22,14 +22,23 @@
   </div>
 </header>
 
-<h1 th:text="'Regista per il film ' + ${movie.title}"></h1>
-<div th:if="${artists.isEmpty()}">Non ci sono registi nel sistema</div>
-<ul>
-  <li th:each="artist : ${artists}">
-    <a th:href="@{'/admin/setDirectorToMovie/'+ ${artist.id}+'/'+${movie.id}}"
-       th:text="${artist.name} + ' ' + ${artist.surname}">Steven Spielberg</a>
-  </li>
-</ul>
+<h1 th:text="'Scegli il regista per il film: ' + ${movie.title}"></h1>
+<div class="hobj" th:if="${artists.isEmpty()}">Non ci sono registi nel sistema</div>
+<div class="movies-container">
+  <div th:each="artist : ${artists}">
+    <a th:href="@{'/admin/setDirectorToMovie/'+ ${artist.id}+'/'+${movie.id}}">
+      <div class="movie-container">
+        <div class="movie-image">
+          <img th:if="${artist.encodedImage}" th:src="'data:image/jpeg;base64,' + ${artist.encodedImage}" alt="Movie Image" />
+        </div>
+        <div class="movie-details">
+          <span class="movie-title" th:text="${artist.name} + ' ' + ${artist.surname}"></span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
 </body>
 
 </html>

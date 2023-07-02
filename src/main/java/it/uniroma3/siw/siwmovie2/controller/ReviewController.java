@@ -42,7 +42,7 @@ public class ReviewController {
             return "movie.html";
         } else {
             model.addAttribute("movie", this.movieService.getMovieById(movieId));
-            return "formNewReview.html";
+            return "movie.html";
         }
     }
 

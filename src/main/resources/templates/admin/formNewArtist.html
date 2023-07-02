@@ -6,12 +6,13 @@
     New Artist
   </title>
   <link rel="stylesheet" href="/css/stile.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 
 <body>
 <header>
   <div class="heeaderContainer">
-    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
+    <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
     <div>
       <div class="login-box" th:if="${userDetails}">
         <span th:text="${userDetails.username}"></span>
@@ -24,8 +25,12 @@
   </div>
 </header>
 
-<h1>Aggiungi un artista</h1>
-<form th:action="@{/admin/artist}" method="POST" th:object="${artist}">
+<h1 class="hform">Aggiungi un artista</h1>
+<div class="content-container">
+<form th:action="@{/admin/artist}" method="POST" th:object="${artist}"
+      enctype="multipart/form-data"
+      style="max-width: 400px; margin: 0 auto;"
+>
   <div>
     <span th:text="${messaggioErrore}">Errore</span>
   </div>
@@ -43,13 +48,41 @@
   </div>
 
   <div>
-    <label>Fotografia (url):</label> <span><input type="text" th:field="${artist.urlOfPicture}" /></span>
+    <label>Data di morte:</label> <span><input type="date" th:field="${artist.dateOfDeath}" /></span>
+  </div>
+
+  <div>
+    <label>Immagine:</label> <span><input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg"/></span>
+  </div>
+
+  <div>
+    <img id="thumbnail" alt="Logo Preview" />
   </div>
 
   <div>
     <span><button type="submit">Conferma</button></span>
   </div>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#fileImage').change(function(){
+        showImageThumbnail(this);
+      })
+    })
+
+    function showImageThumbnail(fileInput){
+      file = fileInput.files[0];
+      reader = new FileReader();
+      reader.onload = function(e) {
+        $('#thumbnail').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+
+
 </form>
+</div>
 </body>
 
 </html>

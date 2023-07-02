@@ -8,7 +8,7 @@
 <body>
 <header>
   <div class="heeaderContainer">
-    <a href="/"><img src="/images/logo-siw.png" width="20%"/></a>
+    <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
     <div>
       <div class="login-box" th:if="${userDetails}">
         <span th:text="${userDetails.username}"></span>
@@ -21,13 +21,79 @@
   </div>
 </header>
 
-<h1>Dettagli Film</h1>
-<div th:if="${movie}">
-  <span th:text="${movie.title}">Up!</span>
-  <span th:text="'(' + ${movie.year} + ')'">2000</span>
-  <span><img width="30%" th:src="'data:image/jpeg;base64,' + ${image}" /></span>
-  <a th:href="@{'/addReview/' + ${movie.id}}">Aggiungi una recensione</a>
+<h1 class="centered-heading">Dettagli Film</h1>
+<div th:if="${movie}" class="film-details-container">
+  <div class="movie-image-container">
+    <img class="centered-image" th:src="'data:image/jpeg;base64,' + ${movie.encodedImage}" />
+  </div>
+
+  <div class="movie-info-container">
+    <div class="movie-data">
+      <span class="movie-title" th:text="${movie.title}">Up!</span>
+      <span class="movie-year" th:text="'(' + ${movie.year} + ')'">2000</span>
+    </div>
+  </div>
+
+  <div class="review-container">
+    <a class="review-button" th:href="@{'/addReview/' + ${movie.id}}">Aggiungi una recensione</a>
+  </div>
+
+
+
+  <h2 class="hobj">Regista del film:</h2>
+  <div th:if="${movie.director}">
+  <div class="movies-container">
+      <a th:href="@{'/artist' + '/' + ${movie.director.id}}">
+        <div class="movie-container">
+          <div class="movie-image">
+            <img th:if="${movie.director.encodedImage}" th:src="'data:image/jpeg;base64,' + ${movie.director.encodedImage}" alt="Movie Image" />
+          </div>
+          <div class="movie-details">
+            <span class="movie-title" th:text="${movie.director.name} + ' ' + ${movie.director.surname}"></span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="hobj" th:unless="${movie.director}">Non e' stato inserito il regista per questo film</div>
+<div>
+  <h2 class="hobj">Attori del film:</h2>
+  <div class="hobj" th:if="${movie.actors.isEmpty()}">Non ci sono attori per questo film</div>
+  <div class="movies-container">
+    <div th:each="artist : ${movie.actors}">
+      <a th:href="@{'/artist' + '/' + ${artist.id}}">
+        <div class="movie-container">
+          <div class="movie-image">
+            <img th:if="${artist.encodedImage}" th:src="'data:image/jpeg;base64,' + ${artist.encodedImage}" alt="Movie Image" />
+          </div>
+          <div class="movie-details">
+            <span class="movie-title" th:text="${artist.name} + ' ' + ${artist.surname}"></span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
 </div>
-<div th:unless="${movie}">Non esiste</div>
+
+  <h2 class="hobj">Recensioni del film: </h2>
+  <div class="hobj" th:if="${movie.reviews.isEmpty()}">Non ci sono ancora recensioni, scrivine una te!</div>
+  <ul>
+    <li th:each="review : ${movie.reviews}">
+      <div class="review-block">
+        <div>
+          <strong class="reviewTitle">Nome: </strong><span class= "reviewContent" th:text="${review.reviewerName}"></span>
+        </div>
+        <div>
+          <strong class="reviewTitle">Rating: </strong><span class= "reviewContent" th:text="${review.rate}"></span>
+        </div>
+        <div>
+          <strong class="reviewTitle">Recensione: </strong><span class= "reviewContent" th:text="${review.comment}"></span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="hobj" th:unless="${movie}">Non esiste</div>
 </body>
 </html>

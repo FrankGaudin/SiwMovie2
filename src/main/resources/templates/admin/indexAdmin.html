@@ -14,31 +14,115 @@
     <span th:text="${userDetails.username}"></span>
     <a href="/logout">Logout</a>
   </div>
-  <div class="login-box" th:unless="${userDetails}">
+  <div th:unless="${userDetails}" class="login-box">
     <a href="/login">Login</a>
   </div>
 </header>
 
-<div class="logo-container"><img src="/images/logo-siw.png" width="50%" /></div>
+
+<div class="logo-container"><img src="/images/logo-siw.png" width="20" /></div>
+
 <div class="form-search">
   <form th:action="@{/searchMovies}" method="post">
     <input th:value="${title}" name="title" placeholder="Cerca film..." />
-    <!-- Aggiungi il pulsante di ricerca o altri elementi desiderati -->
   </form>
 </div>
-<h1>Consulta l'archivio</h1>
-<div class="hobj">
-  <a href="/movie">Elenco Film</a>
+
+<div class="slideshow-container">
+  <div class="slideshow-wrapper">
+    <a href="/movie/1" class="slideshow-item">
+      <div class="image-overlay">
+        <span class="film-title">Titolo Film 1</span>
+      </div>
+      <img class="mySlides active" src="/images/movie1.jpg" />
+    </a>
+    <a href="/movie/2" class="slideshow-item">
+      <div class="image-overlay">
+        <span class="film-title">Titolo Film 2  &eacute;</span>
+      </div>
+      <img class="mySlides" src="/images/movie2.jpg" />
+    </a>
+    <a href="/movie/3" class="slideshow-item">
+      <div class="image-overlay">
+        <span class="film-title">Titolo Film 3</span>
+      </div>
+      <img class="mySlides" src="/images/movie3.jpg" />
+    </a>
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
 </div>
-<div class="hobj">
-  <a href="/artist">Elenco Artisti</a>
+
+<script>
+  const slideshowWrapper = document.querySelector('.slideshow-wrapper');
+  const slides = slideshowWrapper.getElementsByClassName('slideshow-item');
+  const filmTitles = ['V per Vendemmia', 'Non e un paese per giovani', 'Barbie']; // Aggiungi i titoli dei tuoi film qui
+  let currentSlideIndex = 0;
+
+  function showNextSlide() {
+    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+    updateSlide();
+  }
+
+  function showPreviousSlide() {
+    currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+    updateSlide();
+  }
+
+  function updateSlide() {
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = 'none';
+    }
+    slides[currentSlideIndex].style.display = 'block';
+  }
+
+  document.querySelector('.prev').addEventListener('click', showPreviousSlide);
+  document.querySelector('.next').addEventListener('click', showNextSlide);
+
+  // Aggiunta del titolo del film dinamico
+  const filmTitleElements = slideshowWrapper.getElementsByClassName('film-title');
+  for (let i = 0; i < filmTitleElements.length; i++) {
+    filmTitleElements[i].textContent = filmTitles[i];
+  }
+
+  updateSlide();
+
+  var slideIndex = 1;
+  showSlides(slideIndex);
+
+  function plusSlides(n) {
+    showSlides((slideIndex += n));
+  }
+
+  function currentSlide(n) {
+    showSlides((slideIndex = n));
+  }
+
+  function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName('mySlides');
+    if (n > slides.length) {
+      slideIndex = 1;
+    }
+    if (n < 1) {
+      slideIndex = slides.length;
+    }
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = 'none';
+    }
+    slides[slideIndex - 1].style.display = 'block';
+  }
+</script>
+<div class="consult-archive">
+  <a href="/movie" class="consult-archive-link">Consulta l'archivio</a>
 </div>
-<h1>Operazioni per amministratore</h1>
-<div class="hobj">
-  <a href="/admin/indexMovie">Operazioni sui film</a>
+<h1 class="consult-archive">Operazioni per amministratore</h1>
+<div class="consult-archive">
+  <a href="/admin/indexMovie" class="consult-archive-link">Operazioni sui film</a>
 </div>
-<div class="hobj">
-  <a href="/admin/indexArtist">Operazioni sugli artisti</a>
+<div class="consult-archive">
+  <a href="/admin/indexArtist" class="consult-archive-link">Operazioni sugli artisti</a>
 </div>
 </body>
 

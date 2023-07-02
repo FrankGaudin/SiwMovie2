@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Review</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+<body>
+
+<header>
+    <div class="heeaderContainer">
+        <a href="/"><img src="/images/logo-siw.png" width="15%"/></a>
+        <div>
+            <div class="login-box" th:if="${userDetails}">
+                <span th:text="${userDetails.username}"></span>
+                <a href="/logout">Logout</a>
+            </div>
+            <div th:unless="${userDetails}" class="login-box">
+                <a href="/login">Login</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<h1 class="hobj">Recensioni del film: </h1>
+<div class="hobj" th:if="${movie.reviews.isEmpty()}">Non ci sono recensioni</div>
+<ul class="reviews-grid">
+    <li th:each="review : ${movie.reviews}">
+        <div class="review-block">
+            <div>
+                <strong class="reviewTitle">Nome: </strong><span class="reviewContent" th:text="${review.reviewerName}"></span>
+            </div>
+            <div>
+                <strong class="reviewTitle">Rating: </strong><span class="reviewContent" th:text="${review.rate}"></span>
+            </div>
+            <div>
+                <strong class="reviewTitle">Recensione: </strong><span class="reviewContent" th:text="${review.comment}"></span>
+            </div>
+            <div class="review-actions">
+                <a class="hobj" th:href="@{'/admin/deleteReview/' + ${review.id} + '/' + ${movie.id}}">
+                    <button class="movie-button red-button" type="button">Rimuovi recensione</button>
+                </a>
+            </div>
+        </div>
+    </li>
+</ul>
+
+</body>
+</html>

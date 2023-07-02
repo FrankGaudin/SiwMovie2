@@ -47,16 +47,12 @@ public class ReviewService {
 
     @Transactional
     public void deleteReview(Long reviewId) {
-        try {
-            Review review = this.getReviewById(reviewId);
-            Movie movie = review.getMovie();
-            review.getReviewer().getReviews().remove(review);
-            review.getMovie().getReviews().remove(review);
-            this.movieRepository.save(movie);
-            this.reviewRepository.delete(review);
-        } catch (Exception e) {
-            return;
-        }
+        Review review = this.getReviewById(reviewId);
+        Movie movie = review.getMovie();
+        review.getReviewer().getReviews().remove(review);
+        review.getMovie().getReviews().remove(review);
+        this.movieRepository.save(movie);
+        this.reviewRepository.delete(review);
     }
 
     public Review saveReviewToUser(Long userId, Long reviewId) {

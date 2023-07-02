@@ -30,14 +30,14 @@
 
   <div class="movie-info-container">
     <div class="movie-data">
-  <div th:text="${artist.name} + ' ' + ${artist.surname}">Dino Risi></div>
-  <div th:text="'Data di nascita: ' + ${#temporals.format(artist.dateOfBirth, 'dd-MM-yyyy')}">20/20/2000</div>
+      <div th:text="${artist.name} + ' ' + ${artist.surname}">Dino Risi></div>
+      <div th:text="'Data di nascita: ' + ${#temporals.format(artist.dateOfBirth, 'dd-MM-yyyy')}">20/20/2000</div>
       <div th:if="${artist.dateOfDeath}">
-    <span th:text="'Data di nascita: ' + ${#temporals.format(artist.dateOfDeath, 'dd-MM-yyyy')}"></span>
-    </div>
+        <span th:text="'Data di nascita: ' + ${#temporals.format(artist.dateOfDeath, 'dd-MM-yyyy')}"></span>
+      </div>
     </div>
   </div>
 </div>
-<div th:unless="${artist}">Non esiste</div>
+<div class="hobj" th:unless="${artist}">Non esiste</div>
 </body>
 </html>
