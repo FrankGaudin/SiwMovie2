@@ -89,7 +89,9 @@ public class MovieService {
         Movie movie = this.movieRepository.findById(movieId).get();
         Artist actor = this.artistRepository.findById(actorId).get();
         Set<Artist> actors = movie.getActors();
+        Set<Movie> starredMovies = actor.getStarredMovies();
         actors.add(actor);
+        starredMovies.add(movie);
         this.movieRepository.save(movie);
         return movie;
     }

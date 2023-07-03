@@ -24,7 +24,7 @@
 
 
 <h1>Artisti</h1>
-<div th:if="${artists==null || artists.isEmpty()}">Non ci sono artisti nel sistema</div>
+<div class="hobj" th:if="${artists==null || artists.isEmpty()}">Non ci sono artisti nel sistema</div>
 <div class="movies-container">
   <div th:each="artist : ${artists}">
     <a th:href="@{'/artist' + '/' + ${artist.id}}">

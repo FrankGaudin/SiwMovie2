@@ -41,7 +41,7 @@ public class CredentialsService {
     @Transactional
     public boolean exists(String username) {
         Optional<Credentials> result = this.credentialsRepository.findByUsername(username);
-        if(result == null){
+        if(result.isEmpty()){
             return true;
         } else {
             return false;

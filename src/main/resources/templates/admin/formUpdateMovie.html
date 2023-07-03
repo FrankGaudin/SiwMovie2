@@ -26,7 +26,7 @@
 
 <div>
     <div class="formContent">
-        <h1 class="hform">Aggiorna film</h1>
+        <h1 class="hform consult-archive">Aggiorna film</h1>
         <div>
             <a class="hobj" th:href="@{'/admin/updateMovie/' + ${movie.id}}">
                 <button class="btnazione" type="button">Modifica dati film</button>
@@ -45,7 +45,7 @@
         </div>
         <div>
         <a class="hobj" th:href="@{'/admin/deleteMovie/' + ${movie.id}}">
-            <button class="movie-button red-button" type="button">Elimina film</button>
+            <button class="movie-button red-button hobj" type="button">Elimina film</button>
         </a>
         </div>
     </div>

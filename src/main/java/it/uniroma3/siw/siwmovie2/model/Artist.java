@@ -80,6 +80,10 @@ public class Artist {
         return starredMovies;
     }
 
+    public Set<Movie> getStarredMovies() {
+        return starredMovies;
+    }
+
     public void setStarredMovies(Set<Movie> starredMovies) {
         this.starredMovies = starredMovies;
     }

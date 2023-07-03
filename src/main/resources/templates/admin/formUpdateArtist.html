@@ -21,7 +21,7 @@
     </div>
 </header>
 
-<h1>Modifica Attore</h1>
+<h1 class ="consult-archive hobj">Modifica Attore</h1>
 <div class="content-container">
     <form th:action="@{'/admin/updatedArtist/' + ${artist.id}}" method="POST" th:object="${artist}"
           enctype="multipart/form-data"
@@ -75,7 +75,7 @@
 </div>
 <div class="rb-block">
     <a class="rb-block" th:href="@{'/admin/deleteArtist/' + ${artist.id}}">
-        <button class="red-button" type="button" style="display: block;">Elimina attore</button>
+        <button class="red-button hobj" type="button" style="display: block;">Elimina attore</button>
     </a>
 </div>
 </body>

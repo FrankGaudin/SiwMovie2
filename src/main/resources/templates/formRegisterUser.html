@@ -47,6 +47,7 @@
       </div>
       <div class="button-group">
         <button type="submit">Registrati</button>
+        <span th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}" th:style="'color:red'"></span>
       </div>
     </form>
   </div>

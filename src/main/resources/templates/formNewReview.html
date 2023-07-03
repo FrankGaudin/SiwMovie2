@@ -31,7 +31,9 @@
     <div>
         <span th:text="${messaggioErrore}">Errore</span>
     </div>
-
+    <div>
+        <h2>Titolo:</h2> <span><input class="titolo" required type ="text" th:field="${review.title}"></span>
+    </div>
     <div>
         <h2>Voto:</h2> <span><input class="voto" required type ="number" min="1" max="5" step="1" th:field="${review.rate}"></span>
     </div>

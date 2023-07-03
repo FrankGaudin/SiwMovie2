@@ -22,8 +22,8 @@
   </div>
 </header>
 
-<h1>Film che soddisfano i requisiti</h1>
-<div th:if="${movies==null || movies.isEmpty()}">Non ci sono film che soddisfano i requisiti</div>
+<h1 class="hobj">Film che soddisfano i requisiti</h1>
+<div class="hobj" th:if="${movies==null || movies.isEmpty()}">Non ci sono film che soddisfano i requisiti</div>
 <div class="movies-container">
   <div th:each="movie : ${movies}">
     <a th:href="@{'/movie' + '/' + ${movie.id}}">

@@ -39,5 +39,42 @@
   </div>
 </div>
 <div th:unless="${artist}">Non esiste</div>
+
+<h2 class="hobj">Film diretti:</h2>
+<div class="movies-container">
+  <div class="hobj" th:if="${artist.directedMovies==null || artist.directedMovies.isEmpty()}">Non ci sono film diretti da questo artista</div>
+  <div th:each="movie : ${artist.directedMovies}">
+    <a th:href="@{'/movie/' + ${movie.id}}">
+      <div class="movie-container">
+        <div class="movie-image">
+          <img th:if="${movie.encodedImage}" th:src="'data:image/jpeg;base64,' + ${movie.encodedImage}" alt="Movie Image" />
+        </div>
+        <div class="movie-details">
+          <span class="movie-title" th:text="${movie.title}"></span>
+          <span class="movie-year" th:text="'(' + ${movie.year} + ')'"></span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<h2 class="hobj">Film in cui ha partecipato come attore:</h2>
+<div class="movies-container">
+  <div class="hobj" th:if="${artist.starredMovies==null || artist.starredMovies.isEmpty()}">Non ci sono film in cui ha partecipato come attore</div>
+  <div th:each="movie : ${artist.starredMovies}">
+    <a th:href="@{'/movie/' + ${movie.id}}">
+      <div class="movie-container">
+        <div class="movie-image">
+          <img th:if="${movie.encodedImage}" th:src="'data:image/jpeg;base64,' + ${movie.encodedImage}" alt="Movie Image" />
+        </div>
+        <div class="movie-details">
+          <span class="movie-title" th:text="${movie.title}"></span>
+          <span class="movie-year" th:text="'(' + ${movie.year} + ')'"></span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
 </body>
 </html>

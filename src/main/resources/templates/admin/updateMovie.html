@@ -22,7 +22,7 @@
     </div>
 </header>
 
-<h1>Modifica Film</h1>
+<h1 class="consult-archive">Modifica Film</h1>
 <div class="content-container">
 <form th:action="@{'/admin/updatedMovie/' + ${movie.id}}" method="POST" th:object="${movie}"
       enctype="multipart/form-data"
